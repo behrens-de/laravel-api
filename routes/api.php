@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,7 +16,7 @@ use App\Http\Controllers\ProductController;
 */
 
 
-# ROUTE = http://localhost:8000/api/... (Example mit artisan serve)
+# ROUTE = http://localhost:8000/api/... (Example mit artisan serrver)
 # Händisch erstellte Routs
 // Route::get('/products',[ProductController::class, 'index']);
 // Route::post('/products', [ProductController::class, 'store']);
@@ -24,8 +25,24 @@ use App\Http\Controllers\ProductController;
 # Mit Route::resources werden CRUD Routs erstellt 
 Route::resource('products', ProductController::class);
 # Route um Produkte via Name zu finden
+
+# Aufteilen der Routen 
+# Public
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
 Route::get('/products/search/{name}', [ProductController::class, 'search']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+# Private with Authentication
+Route::group(['middleware'=>['auth:sanctum']], function(){
+    Route::post('/products', [ProductController::class, 'store']);
+    Route::put('/products/{id}', [ProductController::class, 'update']);
+    Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+    Route::post('/logout',[AuthController::class,'logout']);
 });
+
+# Not used LARAVEL DEFAULT 
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
