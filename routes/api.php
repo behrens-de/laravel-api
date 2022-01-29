@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+# ROUTE = http://localhost:8000/api/products
+Route::get('/products', function(){
+    echo 'Hello Product';
+});
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
