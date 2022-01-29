@@ -14,9 +14,15 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-# ROUTE = http://localhost:8000/api/products
-Route::get('/products',[ProductController::class, 'index']);
-Route::post('/products', [ProductController::class, 'store']);
+
+# ROUTE = http://localhost:8000/api/...
+# Händich erstellte Routs
+// Route::get('/products',[ProductController::class, 'index']);
+// Route::post('/products', [ProductController::class, 'store']);
+// Route::get('/product/{id}', [ProductController::class, 'show']);
+ 
+# Mit Route::resources werden CRUD Routs erstellt 
+Route::resource('products', ProductController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
