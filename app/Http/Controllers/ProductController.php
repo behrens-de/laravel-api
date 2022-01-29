@@ -26,7 +26,12 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // for all fields that must be filled in
+        $request->validate([
+            'name' => 'required',
+            'slug' => 'required',
+            'price' => 'required'
+        ]);
         return Product::create($request->all());
     }
 
