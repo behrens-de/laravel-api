@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,18 @@ use Illuminate\Support\Facades\Route;
 
 # ROUTE = http://localhost:8000/api/products
 Route::get('/products', function(){
-    echo 'Hello Product';
+    // Zeigt alle Produkte an
+    return Product::all();
+});
+
+Route::post('/products', function(){
+   // Erstellt ein Produkt
+   return Product::create([
+       'name' => 'Product One',
+       'slug' => 'product-one',
+       'description' => 'This is Product One',
+       'price' => '99.95'
+   ]);  
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
